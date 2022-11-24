@@ -1,0 +1,30 @@
+git clone git@github.com:develone/pico_w-mqtt_example.git
+
+cd pico_w-mqtt_example/
+
+mkdir build
+
+cd build/
+
+cmake -DHOSTNAME="remote1" -DPICO_BOARD=pico_w -DTEST_TCP_SERVER_IP="10.0.1.12" -DWIFI_SSID="nanotest" -DWIFI_PASSWORD="12345678"  ..
+
+make 
+
+[ 13%] Linking CXX executable mqtt_example.elf
+/usr/lib/gcc/arm-none-eabi/8.3.1/../../../arm-none-eabi/bin/ld: CMakeFiles/mqtt_example.dir/home/devel/sdk/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj: in function `__get_current_exception':
+(.reset+0x9c): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+make[2]: *** [pico_w/mqtt/CMakeFiles/mqtt_example.dir/build.make:2207: pico_w/mqtt/mqtt_example.elf] Error 1
+make[1]: *** [CMakeFiles/Makefile2:1844: pico_w/mqtt/CMakeFiles/mqtt_example.dir/all] Error 2
+make: *** [Makefile:103: all] Error 2
+
+Ater adding iperf.c to mqtt_example.c compiled and linked
+
+iperf -c 10.0.1.14
+------------------------------------------------------------
+Client connecting to 10.0.1.14, TCP port 5001
+TCP window size: 43.8 KByte (default)
+------------------------------------------------------------
+[  3] local 10.0.1.12 port 57454 connected with 10.0.1.14 port 5001
+[ ID] Interval       Transfer     Bandwidth
+[  3] 0.0000-10.1568 sec  7.25 MBytes  5.99 Mbits/sec
