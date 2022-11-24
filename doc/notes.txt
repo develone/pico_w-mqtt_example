@@ -27,4 +27,47 @@ TCP window size: 43.8 KByte (default)
 ------------------------------------------------------------
 [  3] local 10.0.1.12 port 57454 connected with 10.0.1.14 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.1568 sec  7.25 MBytes  5.99 Mbits/sec
+[  3] 0.0000-10.1568 sec  7.25 MBytes  5.99 Mbits/secStarting Nmap 7.80 ( https://nmap.org ) at 2022-11-24 16:56 MST
+Nmap scan report for 10.0.1.10
+Host is up (0.0065s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+80/tcp open  http
+
+Nmap scan report for 10.0.1.11
+Host is up (0.0048s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+111/tcp  open  rpcbind
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+2049/tcp open  nfs
+
+Nmap scan report for 10.0.1.12
+Host is up (0.00036s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+111/tcp  open  rpcbind
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+2049/tcp open  nfs
+
+Nmap scan report for 10.0.1.13
+Host is up (0.018s latency).
+Not shown: 995 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+111/tcp  open  rpcbind
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+2049/tcp open  nfs
+
+Nmap scan report for 10.0.1.14
+Host is up (0.028s latency).
+Not shown: 999 closed ports
+PORT     STATE SERVICE
+5001/tcp open  commplex-link
+
+Nmap done: 256 IP addresses (5 hosts up) scanned in 27.92 seconds
