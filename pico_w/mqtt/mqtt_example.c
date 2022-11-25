@@ -32,14 +32,15 @@
 #include "lwip/netif.h"
 #include "lwip/ip4_addr.h"
 #include "lwip/apps/lwiperf.h"
-//#include "pw_ssid.h"
+#include "pw_ssid.h"
 
 #ifndef USE_LED
 #define USE_LED 1
 #endif
 #include "lwip/apps/mqtt.h"
 #include "mqtt_example.h"
-
+ 
+u16_t mqtt_port = 9863;
 #if LWIP_TCP
 
 /** Define this to a compile-time IP address initialization
@@ -47,7 +48,9 @@
  */
 #ifndef LWIP_MQTT_EXAMPLE_IPADDR_INIT
 #if LWIP_IPV4
-#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(IPADDR_LOOPBACK))
+/*192.168.1.229 0xc0a801e5 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
+#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801e5))
+//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(IPADDR_LOOPBACK))
 #else
 #define LWIP_MQTT_EXAMPLE_IPADDR_INIT
 #endif
@@ -172,6 +175,10 @@ int main() {
         return 1;
     } else {
         printf("Connected.\n");
+        printf("mqtt_port = %d \n",mqtt_port);
+        printf("mqtt_ip = 0x%x &mqtt_ip = 0x%x\n",mqtt_ip,&mqtt_ip);
+        printf("0x%x \n",IPADDR_LOOPBACK);
+        //mqtt_example_init();
     }
 
 #if CLIENT_TEST

@@ -1,3 +1,7 @@
+11/17/22 starting with mqtt_example.c and mqtt_example.h
+found at 
+/home/devel/pico-sdk/lib/lwip/contrib/examples/mqtt
+11/25/22
 git clone git@github.com:develone/pico_w-mqtt_example.git
 
 cd pico_w-mqtt_example/
@@ -6,68 +10,61 @@ mkdir build
 
 cd build/
 
-cmake -DHOSTNAME="remote1" -DPICO_BOARD=pico_w -DTEST_TCP_SERVER_IP="10.0.1.12" -DWIFI_SSID="nanotest" -DWIFI_PASSWORD="12345678"  ..
+modify ../pico_w/mqtt/pw_ssid.h line 4 with "your_ssid_password" 
+ 
+In the line below use your  WIFI_SSID & WIFI_PASSWORD
+
+cmake -DHOSTNAME="remote6" -DPICO_BOARD=pico_w  -DWIFI_SSID="your WIFI_SSID" -DWIFI_PASSWORD="your_ssid_password"  ..
 
 make 
 
-[ 13%] Linking CXX executable mqtt_example.elf
-/usr/lib/gcc/arm-none-eabi/8.3.1/../../../arm-none-eabi/bin/ld: CMakeFiles/mqtt_example.dir/home/devel/sdk/pico-sdk/src/rp2_common/pico_standard_link/crt0.S.obj: in function `__get_current_exception':
-(.reset+0x9c): undefined reference to `main'
-collect2: error: ld returned 1 exit status
-make[2]: *** [pico_w/mqtt/CMakeFiles/mqtt_example.dir/build.make:2207: pico_w/mqtt/mqtt_example.elf] Error 1
-make[1]: *** [CMakeFiles/Makefile2:1844: pico_w/mqtt/CMakeFiles/mqtt_example.dir/all] Error 2
-make: *** [Makefile:103: all] Error 2
-
 Ater adding iperf.c to mqtt_example.c compiled and linked
 
-iperf -c 10.0.1.14
+Program pico_w with the file
+/home/devel/pico_w-mqtt_example/build/pico_w/mqtt/mqtt_example.uf2
+Connecting to WiFi...
+Connected.
+mqtt_port = 9863 
+mqtt_ip = 0xe501a8c0 &mqtt_ip = 0x20000594
+0x7f000001 
+
+Ready, running iperf server at 192.168.1.175
+Completed iperf transfer of 18 MBytes @ 15.0 Mbits/sec
+Total iperf megabytes since start 18 Mbytes
+
+iperf -c remote6
 ------------------------------------------------------------
-Client connecting to 10.0.1.14, TCP port 5001
+Client connecting to remote6, TCP port 5001
 TCP window size: 43.8 KByte (default)
 ------------------------------------------------------------
-[  3] local 10.0.1.12 port 57454 connected with 10.0.1.14 port 5001
+[  3] local 192.168.1.229 port 35384 connected with 192.168.1.175 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.1568 sec  7.25 MBytes  5.99 Mbits/secStarting Nmap 7.80 ( https://nmap.org ) at 2022-11-24 16:56 MST
-Nmap scan report for 10.0.1.10
-Host is up (0.0065s latency).
-Not shown: 999 closed ports
-PORT   STATE SERVICE
-80/tcp open  http
+[  3] 0.0000-10.0042 sec  18.4 MBytes  15.4 Mbits/sec
 
-Nmap scan report for 10.0.1.11
-Host is up (0.0048s latency).
-Not shown: 995 closed ports
-PORT     STATE SERVICE
-22/tcp   open  ssh
-111/tcp  open  rpcbind
-139/tcp  open  netbios-ssn
-445/tcp  open  microsoft-ds
-2049/tcp open  nfs
+Ready, running iperf server at 192.168.1.175
+Completed iperf transfer of 18 MBytes @ 15.0 Mbits/sec
+Total iperf megabytes since start 18 Mbytes 
 
-Nmap scan report for 10.0.1.12
-Host is up (0.00036s latency).
-Not shown: 995 closed ports
-PORT     STATE SERVICE
-22/tcp   open  ssh
-111/tcp  open  rpcbind
-139/tcp  open  netbios-ssn
-445/tcp  open  microsoft-ds
-2049/tcp open  nfs
+mqtt_example.c
 
-Nmap scan report for 10.0.1.13
-Host is up (0.018s latency).
-Not shown: 995 closed ports
-PORT     STATE SERVICE
-22/tcp   open  ssh
-111/tcp  open  rpcbind
-139/tcp  open  netbios-ssn
-445/tcp  open  microsoft-ds
-2049/tcp open  nfs
+/** Define this to a compile-time IP address initialization
+ * to connect anything else than IPv4 loopback
+ */
+#ifndef LWIP_MQTT_EXAMPLE_IPADDR_INIT
+#if LWIP_IPV4
+/*192.168.1.229 0xc0a801e5 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
+#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801e5))
+#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(IPADDR_LOOPBACK))
+#else
+#define LWIP_MQTT_EXAMPLE_IPADDR_INIT
+#endif
+#endif
+mqt_example.dis
+200005a4 <mqtt_ip>:
+200005a4:	e501a8c0                                ....
 
-Nmap scan report for 10.0.1.14
-Host is up (0.028s latency).
-Not shown: 999 closed ports
-PORT     STATE SERVICE
-5001/tcp open  commplex-link
+200005a8 <mqtt_port>:
+200005a8:	00002687  
 
-Nmap done: 256 IP addresses (5 hosts up) scanned in 27.92 seconds
+MQTT_SERVER = 192.168.1.229 mqtt_port = 9863                                    
+mqtt_ip = 0xe501a8c0 &mqtt_ip = 0x200005a4 
