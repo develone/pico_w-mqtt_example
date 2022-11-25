@@ -24,26 +24,30 @@ Program pico_w with the file
 /home/devel/pico_w-mqtt_example/build/pico_w/mqtt/mqtt_example.uf2
 Connecting to WiFi...
 Connected.
-mqtt_port = 9863 
-mqtt_ip = 0xe501a8c0 &mqtt_ip = 0x20000594
-0x7f000001 
+mqtt_port = 1863 &mqtt_port 0x20000598
+mqtt_ip = 0xd301a8c0 &mqtt_ip = 0x20000594
+IPADDR_LOOPBACK = 0x7f000001 
+mqtt_client 0x20001bac &mqtt_client 0x20000f40 
+mqtt_set_inpub_callback 0x10001245
+mqtt_client_connect 0x1000125d
 
 Ready, running iperf server at 192.168.1.175
-Completed iperf transfer of 18 MBytes @ 15.0 Mbits/sec
-Total iperf megabytes since start 18 Mbytes
+MQTT client "test" connection cb: status 256
+
 
 iperf -c remote6
 ------------------------------------------------------------
 Client connecting to remote6, TCP port 5001
 TCP window size: 43.8 KByte (default)
 ------------------------------------------------------------
-[  3] local 192.168.1.229 port 35384 connected with 192.168.1.175 port 5001
+[  3] local 192.168.1.229 port 54954 connected with 192.168.1.175 port 5001
 [ ID] Interval       Transfer     Bandwidth
-[  3] 0.0000-10.0042 sec  18.4 MBytes  15.4 Mbits/sec
+[  3] 0.0000-10.1016 sec  19.1 MBytes  15.9 Mbits/sec
+
 
 Ready, running iperf server at 192.168.1.175
-Completed iperf transfer of 18 MBytes @ 15.0 Mbits/sec
-Total iperf megabytes since start 18 Mbytes 
+Completed iperf transfer of 19 MBytes @ 15.8 Mbits/sec
+Total iperf megabytes since start 19 Mbytes 
 
 mqtt_example.c
 

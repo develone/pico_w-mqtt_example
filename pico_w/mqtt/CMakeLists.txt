@@ -1,6 +1,7 @@
 add_executable(mqtt_example
 	mqtt_example.c
 	mqtt_example.h
+	mqtt.c
 	lwipopts.h
         )
 target_compile_definitions(mqtt_example PRIVATE
