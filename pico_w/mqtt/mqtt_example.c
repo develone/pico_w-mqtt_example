@@ -40,8 +40,8 @@
 #include "lwip/apps/mqtt.h"
 #include "mqtt_example.h"
  
-//u16_t mqtt_port = 9863;
-u16_t mqtt_port = 1863;
+u16_t mqtt_port = 9883;
+//u16_t mqtt_port = 1883;
 #if LWIP_TCP
 
 /** Define this to a compile-time IP address initialization
@@ -49,10 +49,12 @@ u16_t mqtt_port = 1863;
  */
 #ifndef LWIP_MQTT_EXAMPLE_IPADDR_INIT
 #if LWIP_IPV4
+
 /*192.168.1.229 0xc0a801e5 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
-//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801e5))
+#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801e5))
+//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xe501a8c0))
 /*192.168.1.211 0xc0a801d3 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
-#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801d3))
+//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801d3))
 //#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(IPADDR_LOOPBACK))
 #else
 #define LWIP_MQTT_EXAMPLE_IPADDR_INIT
@@ -85,11 +87,11 @@ static mqtt_client_t* mqtt_client;
 
 static const struct mqtt_connect_client_info_t mqtt_client_info =
 {
-  "test",
+  "pico_w",
   "testuser", /* user */
   "password123", /* pass */
   100,  /* keep alive */
-  "memo", /* will_topic */
+  "update/memo", /* will_topic */
   NULL, /* will_msg */
   0,    /* will_qos */
   0     /* will_retain */
@@ -161,7 +163,7 @@ mqtt_example_init(void)
   
   
   mqtt_client_connect(mqtt_client,
-          &mqtt_ip, MQTT_PORT,
+          &mqtt_ip, mqtt_port,
           mqtt_connection_cb, LWIP_CONST_CAST(void*, &mqtt_client_info),
           &mqtt_client_info);
   printf("mqtt_client_connect 0x%x\n",mqtt_client_connect);
@@ -183,6 +185,9 @@ int main() {
         return 1;
     } else {
         printf("Connected.\n");
+	     
+ 
+			
         printf("mqtt_port = %d &mqtt_port 0x%x\n",mqtt_port,&mqtt_port);
         printf("mqtt_ip = 0x%x &mqtt_ip = 0x%x\n",mqtt_ip,&mqtt_ip);
         printf("IPADDR_LOOPBACK = 0x%x \n",IPADDR_LOOPBACK);
