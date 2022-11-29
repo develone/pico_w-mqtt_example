@@ -59,26 +59,6 @@ u16_t mqtt_port = 9883;
 #endif
 #endif
 
-#if CLIENT_TEST && !defined(IPERF_SERVER_IP)
-#error IPERF_SERVER_IP not defined
-#endif
-
-// Report IP results and exit
-static void iperf_report(void *arg, enum lwiperf_report_type report_type,
-                         const ip_addr_t *local_addr, u16_t local_port, const ip_addr_t *remote_addr, u16_t remote_port,
-                         u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec) {
-    static uint32_t total_iperf_megabytes = 0;
-    uint32_t mbytes = bytes_transferred / 1024 / 1024;
-    float mbits = bandwidth_kbitpsec / 1000.0;
-
-    total_iperf_megabytes += mbytes;
-
-    printf("Completed iperf transfer of %d MBytes @ %.1f Mbits/sec\n", mbytes, mbits);
-    printf("Total iperf megabytes since start %d Mbytes\n", total_iperf_megabytes);
-#if CYW43_USE_STATS
-    printf("packets in %u packets out %u\n", CYW43_STAT_GET(PACKET_IN_COUNT), CYW43_STAT_GET(PACKET_OUT_COUNT));
-#endif
-}
 
 static ip_addr_t mqtt_ip LWIP_MQTT_EXAMPLE_IPADDR_INIT;
 static mqtt_client_t* mqtt_client;
@@ -167,6 +147,27 @@ mqtt_example_init(void)
   printf("mqtt_client_connect 0x%x\n",mqtt_client_connect);
           
 #endif /* LWIP_TCP */
+}
+
+#if CLIENT_TEST && !defined(IPERF_SERVER_IP)
+#error IPERF_SERVER_IP not defined
+#endif
+
+// Report IP results and exit
+static void iperf_report(void *arg, enum lwiperf_report_type report_type,
+                         const ip_addr_t *local_addr, u16_t local_port, const ip_addr_t *remote_addr, u16_t remote_port,
+                         u32_t bytes_transferred, u32_t ms_duration, u32_t bandwidth_kbitpsec) {
+    static uint32_t total_iperf_megabytes = 0;
+    uint32_t mbytes = bytes_transferred / 1024 / 1024;
+    float mbits = bandwidth_kbitpsec / 1000.0;
+
+    total_iperf_megabytes += mbytes;
+
+    printf("Completed iperf transfer of %d MBytes @ %.1f Mbits/sec\n", mbytes, mbits);
+    printf("Total iperf megabytes since start %d Mbytes\n", total_iperf_megabytes);
+#if CYW43_USE_STATS
+    printf("packets in %u packets out %u\n", CYW43_STAT_GET(PACKET_IN_COUNT), CYW43_STAT_GET(PACKET_OUT_COUNT));
+#endif
 }
 
 int main() {
