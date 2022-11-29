@@ -52,10 +52,8 @@ u16_t mqtt_port = 9883;
 
 /*192.168.1.229 0xc0a801e5 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
 #define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801e5))
-//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xe501a8c0))
 /*192.168.1.211 0xc0a801d3 LWIP_MQTT_EXAMPLE_IPADDR_INIT */
 //#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(0xc0a801d3))
-//#define LWIP_MQTT_EXAMPLE_IPADDR_INIT = IPADDR4_INIT(PP_HTONL(IPADDR_LOOPBACK))
 #else
 #define LWIP_MQTT_EXAMPLE_IPADDR_INIT
 #endif
@@ -87,7 +85,7 @@ static mqtt_client_t* mqtt_client;
 
 static const struct mqtt_connect_client_info_t mqtt_client_info =
 {
-  "pico_w",
+  "pico_w-28",
   "testuser", /* user */
   "password123", /* pass */
   100,  /* keep alive */
@@ -180,7 +178,7 @@ int main() {
     }
     cyw43_arch_enable_sta_mode();
     printf("Connecting to WiFi...\n");
-    if (cyw43_arch_wifi_connect_timeout_ms("nanotest", "12345678", CYW43_AUTH_WPA2_AES_PSK, 30000)) {
+    if (cyw43_arch_wifi_connect_timeout_ms("ATTtpHTfPi", WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, 30000)) {
         printf("failed to connect.\n");
         return 1;
     } else {
